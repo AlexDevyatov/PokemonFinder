@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">PokemonFinder</string>
+    <string name="search_pokemon">Найти покемона</string>
+    <string name="random_pokemon">Случайный покемон</string>
+    <string name="favorite_pokemones">Избранные покемоны</string>
+    <string name="search_hint">Найти</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
