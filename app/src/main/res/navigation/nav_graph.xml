@@ -7,8 +7,22 @@
               android:label="MainFragment" tools:layout="@layout/fragment_main">
         <action android:id="@+id/action_mainFragment_to_searchPokemonFragment"
                 app:destination="@id/searchPokemonFragment"/>
+        <action
+                android:id="@+id/action_mainFragment_to_randomPokemonFragment"
+                app:destination="@id/randomPokemonFragment" />
+        <action
+                android:id="@+id/action_mainFragment_to_favoritesFragment"
+                app:destination="@id/favoritesFragment" />
     </fragment>
     <fragment android:id="@+id/searchPokemonFragment"
               android:name="com.alexdevyatov.pokemonfinder.view.fragment.SearchPokemonFragment"
               android:label="SearchPokemonFragment"/>
+    <fragment
+            android:id="@+id/randomPokemonFragment"
+            android:name="com.alexdevyatov.pokemonfinder.view.fragment.RandomPokemonFragment"
+            android:label="RandomPokemonFragment" />
+    <fragment
+            android:id="@+id/favoritesFragment"
+            android:name="com.alexdevyatov.pokemonfinder.view.fragment.FavoritesFragment"
+            android:label="FavoritesFragment" />
 </navigation>

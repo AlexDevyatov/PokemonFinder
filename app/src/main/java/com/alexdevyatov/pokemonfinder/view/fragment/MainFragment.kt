@@ -14,7 +14,9 @@ import kotlinx.android.synthetic.main.fragment_main.*
 
 class MainFragment : Fragment() {
 
-    private var btnSearch : Button? = null;
+    private var btnSearch : Button? = null
+    private var btnRandom : Button? = null
+    private var btnFavorites : Button? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -23,9 +25,17 @@ class MainFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_main, container, false)
         btnSearch = view.findViewById(R.id.btnSearch)
+        btnRandom = view.findViewById(R.id.btnRandom)
+        btnFavorites = view.findViewById(R.id.btnFavorites)
+
         btnSearch!!.setOnClickListener {
-            val action = MainFragmentDirections.actionMainFragmentToSearchPokemonFragment()
-            it.findNavController().navigate(action)
+            it.findNavController().navigate(MainFragmentDirections.actionMainFragmentToSearchPokemonFragment())
+        }
+        btnRandom!!.setOnClickListener {
+            it.findNavController().navigate(MainFragmentDirections.actionMainFragmentToRandomPokemonFragment())
+        }
+        btnFavorites!!.setOnClickListener {
+            it.findNavController().navigate(MainFragmentDirections.actionMainFragmentToFavoritesFragment())
         }
         return view
     }
