@@ -8,13 +8,18 @@ import android.util.Log
 import android.view.*
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
+import com.alexdevyatov.pokemonfinder.App
 import com.alexdevyatov.pokemonfinder.R
+import com.alexdevyatov.pokemonfinder.viewmodel.PokemonViewModel
+import com.alexdevyatov.pokemonfinder.viewmodel.factory.PokemonViewModelFactory
 
 
 class SearchPokemonFragment : Fragment() {
 
     private var searchView: SearchView? = null
     private var queryTextListener: SearchView.OnQueryTextListener? = null
+    private var pokemonViewModel: PokemonViewModel? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,6 +33,7 @@ class SearchPokemonFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+        createViewModel()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -50,7 +56,8 @@ class SearchPokemonFragment : Fragment() {
 
                 override fun onQueryTextSubmit(query: String): Boolean {
                     Log.i("onQueryTextSubmit", query)
-
+                    pokemonViewModel!!.name = query
+                    pokemonViewModel!!.request()
                     return true
                 }
             }
@@ -66,5 +73,11 @@ class SearchPokemonFragment : Fragment() {
         }
         searchView!!.setOnQueryTextListener(queryTextListener)
         return super.onOptionsItemSelected(item)
+    }
+
+    fun createViewModel() {
+        val appComponent = (activity!!.application as App).getAppComponent()
+
+        pokemonViewModel = ViewModelProviders.of(this, PokemonViewModelFactory(appComponent!!)).get(PokemonViewModel::class.java)
     }
 }

@@ -15,10 +15,14 @@ class PokemonViewModel(private val appComponent: AppComponent) : BaseViewModel<P
     @Inject
     lateinit var repository: Repository
 
-    private var name = ""
+    var name = ""
 
     init {
         appComponent.inject(this)
+    }
+
+    fun request() {
+        loadData()
     }
 
     override fun loadData() {
@@ -27,7 +31,9 @@ class PokemonViewModel(private val appComponent: AppComponent) : BaseViewModel<P
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy(
-                onSuccess = {Log.d("REQUEST", "Success")},
+                onSuccess = {
+                    Log.d("REQUEST", "Success")
+                },
                 onError = { Log.d("REQUEST", "Error")}
             )
     }
