@@ -8,5 +8,7 @@ import retrofit2.http.Path
 interface ApiService {
 
     @GET("pokemon/{name}")
-    fun getPokemon(@Path("name") name: String) : Single<Pokemon>
+    fun getPokemon(
+        @Path("name") name: String
+    ) : Single<Pokemon>
 }
