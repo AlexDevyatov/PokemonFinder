@@ -32,7 +32,7 @@ class PokemonViewModel(private val appComponent: AppComponent) : BaseViewModel<P
             .subscribeBy(
                 onSuccess = {
                     Log.d("REQUEST", "Success")
-                    data!!.postValue(it)
+                    data.postValue(it)
                 },
                 onError = { Log.d("REQUEST", "Error")}
             )

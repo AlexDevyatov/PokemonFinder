@@ -6,7 +6,10 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+import android.widget.TextView
 import androidx.appcompat.widget.SearchView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -15,6 +18,7 @@ import com.alexdevyatov.pokemonfinder.R
 import com.alexdevyatov.pokemonfinder.model.Pokemon
 import com.alexdevyatov.pokemonfinder.viewmodel.PokemonViewModel
 import com.alexdevyatov.pokemonfinder.viewmodel.factory.PokemonViewModelFactory
+import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.fragment_search_pokemon.*
 
 
@@ -30,6 +34,15 @@ class SearchPokemonFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_search_pokemon, container, false)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        tvWeightCaption.visibility = View.INVISIBLE
+        tvHeightCaption.visibility = View.INVISIBLE
+        tvNameCaption.visibility = View.INVISIBLE
+        tvTypes.visibility = View.INVISIBLE
+        llTypesContainer.removeAllViews()
     }
 
 
@@ -72,7 +85,27 @@ class SearchPokemonFragment : Fragment() {
     }
 
     private fun updatePokemonView(pokemon: Pokemon?) {
-        textview.text = pokemon!!.name
+        tvWeightCaption.visibility = View.VISIBLE
+        tvHeightCaption.visibility = View.VISIBLE
+        tvNameCaption.visibility = View.VISIBLE
+        tvTypes.visibility = View.VISIBLE
+
+        tvPokemonName.text = pokemon!!.name
+        tvName.text = pokemon.name
+        tvWeight.text = (pokemon.weight * 0.1).toString() + " kg"
+        tvHeight.text = (pokemon.height * 0.1).toString() + " m"
+
+        llTypesContainer.removeAllViews()
+        for (type in pokemon.types) {
+            val tvType = TextView(activity)
+            tvType.text = type.type.name
+            tvType.setPadding(5,5,5,5)
+            tvType.layoutParams = ViewGroup.LayoutParams(WRAP_CONTENT, WRAP_CONTENT)
+            tvType.setTextColor(ContextCompat.getColor(activity as Context, R.color.textColorBlack))
+            llTypesContainer.addView(tvType)
+        }
+
+        Glide.with(this).load(pokemon!!.sprites.front).centerCrop().into(ivPokemon)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -83,7 +116,7 @@ class SearchPokemonFragment : Fragment() {
         return super.onOptionsItemSelected(item)
     }
 
-    fun createViewModel() {
+    private fun createViewModel() {
         val appComponent = (activity!!.application as App).getAppComponent()
 
         pokemonViewModel = ViewModelProviders.of(this, PokemonViewModelFactory(appComponent!!)).get(PokemonViewModel::class.java)

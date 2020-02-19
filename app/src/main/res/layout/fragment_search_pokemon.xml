@@ -1,15 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
+        android:padding="5dp"
         tools:context=".view.fragment.SearchPokemonFragment">
 
     <TextView
-            android:id="@+id/textview"
-            android:text="azaza"
+            android:id="@+id/tvPokemonName"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/textColorBlack"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:padding="5dp"
+            tools:text="pikachu" />
 
-</LinearLayout>
+    <ImageView
+            android:id="@+id/ivPokemon"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:padding="5dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvPokemonName" />
+
+    <TextView
+            android:id="@+id/tvNameCaption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="@string/name"
+            android:textColor="@color/textColorBlack"
+            android:visibility="invisible"
+            app:layout_constraintLeft_toRightOf="@+id/ivPokemon"
+            app:layout_constraintTop_toBottomOf="@+id/tvPokemonName" />
+
+    <TextView
+            android:id="@+id/tvName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:textColor="@color/textColorBlack"
+            app:layout_constraintLeft_toRightOf="@+id/tvNameCaption"
+            app:layout_constraintTop_toBottomOf="@+id/tvPokemonName"
+            tools:text="Pikachu" />
+
+    <TextView
+            android:id="@+id/tvWeightCaption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="@string/weight"
+            android:textColor="@color/textColorBlack"
+            android:visibility="invisible"
+            app:layout_constraintLeft_toRightOf="@+id/ivPokemon"
+            app:layout_constraintTop_toBottomOf="@+id/tvNameCaption" />
+
+    <TextView
+            android:id="@+id/tvWeight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:textColor="@color/textColorBlack"
+            app:layout_constraintLeft_toRightOf="@+id/tvWeightCaption"
+            app:layout_constraintTop_toBottomOf="@+id/tvName"
+            tools:text="90 lb" />
+
+    <TextView
+            android:id="@+id/tvHeightCaption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="@string/height"
+            android:textColor="@color/textColorBlack"
+            android:visibility="invisible"
+            app:layout_constraintLeft_toRightOf="@+id/ivPokemon"
+            app:layout_constraintTop_toBottomOf="@+id/tvWeightCaption" />
+
+    <TextView
+            android:id="@+id/tvHeight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:textColor="@color/textColorBlack"
+            app:layout_constraintLeft_toRightOf="@+id/tvHeightCaption"
+            app:layout_constraintTop_toBottomOf="@+id/tvWeight"
+            tools:text="175" />
+
+    <TextView
+            android:id="@+id/tvTypes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="@string/types"
+            android:textColor="@color/textColorBlack"
+            android:visibility="invisible"
+            app:layout_constraintLeft_toRightOf="@+id/ivPokemon"
+            app:layout_constraintTop_toBottomOf="@+id/tvHeightCaption" />
+
+    <LinearLayout
+            android:id="@+id/llTypesContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:orientation="horizontal"
+            app:layout_constraintLeft_toRightOf="@id/tvTypes"
+            app:layout_constraintTop_toBottomOf="@id/tvHeight" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
