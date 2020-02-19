@@ -1,6 +1,5 @@
 package com.alexdevyatov.pokemonfinder.viewmodel
 
-import android.annotation.SuppressLint
 import android.util.Log
 import com.alexdevyatov.pokemonfinder.di.AppComponent
 import com.alexdevyatov.pokemonfinder.model.Pokemon
@@ -33,6 +32,7 @@ class PokemonViewModel(private val appComponent: AppComponent) : BaseViewModel<P
             .subscribeBy(
                 onSuccess = {
                     Log.d("REQUEST", "Success")
+                    data!!.postValue(it)
                 },
                 onError = { Log.d("REQUEST", "Error")}
             )

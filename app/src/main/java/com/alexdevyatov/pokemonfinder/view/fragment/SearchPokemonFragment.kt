@@ -8,11 +8,14 @@ import android.util.Log
 import android.view.*
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.alexdevyatov.pokemonfinder.App
 import com.alexdevyatov.pokemonfinder.R
+import com.alexdevyatov.pokemonfinder.model.Pokemon
 import com.alexdevyatov.pokemonfinder.viewmodel.PokemonViewModel
 import com.alexdevyatov.pokemonfinder.viewmodel.factory.PokemonViewModelFactory
+import kotlinx.android.synthetic.main.fragment_search_pokemon.*
 
 
 class SearchPokemonFragment : Fragment() {
@@ -58,6 +61,7 @@ class SearchPokemonFragment : Fragment() {
                     Log.i("onQueryTextSubmit", query)
                     pokemonViewModel!!.name = query
                     pokemonViewModel!!.request()
+                    pokemonViewModel!!.data.observe(this@SearchPokemonFragment, Observer<Pokemon> { updatePokemonView(it)})
                     return true
                 }
             }
@@ -65,6 +69,10 @@ class SearchPokemonFragment : Fragment() {
             searchView!!.queryHint = "Найти покемона по имени"
         }
         super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    private fun updatePokemonView(pokemon: Pokemon?) {
+        textview.text = pokemon!!.name
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

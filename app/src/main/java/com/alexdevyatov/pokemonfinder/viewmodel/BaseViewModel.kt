@@ -6,11 +6,7 @@ import java.util.concurrent.Executors
 
 abstract class BaseViewModel<T> : ViewModel() {
 
-    val data: MutableLiveData<T>
-        get() {
-            service.submit { this.loadData() }
-            return data
-        }
+    var data: MutableLiveData<T> = MutableLiveData()
 
     private val service = Executors.newSingleThreadExecutor()
 
