@@ -7,14 +7,33 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
+import com.alexdevyatov.pokemonfinder.App
 import com.alexdevyatov.pokemonfinder.R
+import com.alexdevyatov.pokemonfinder.model.Pokemon
+import com.alexdevyatov.pokemonfinder.viewmodel.PokemonViewModel
+import com.alexdevyatov.pokemonfinder.viewmodel.factory.PokemonViewModelFactory
+import kotlin.random.Random
 
 class MainFragment : Fragment() {
+
+    private val MAX_POKEMON_ID = 807
 
     private var btnSearch : Button? = null
     private var btnRandom : Button? = null
     private var btnFavorites : Button? = null
+
+    private var pokemonViewModel: PokemonViewModel? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val appComponent = (activity!!.application as App).getAppComponent()
+        pokemonViewModel = ViewModelProviders.of(this, PokemonViewModelFactory(appComponent!!)).get(PokemonViewModel::class.java)
+        pokemonViewModel!!.data.observe(this, Observer<Pokemon> { showPokemon(it)})
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,12 +44,12 @@ class MainFragment : Fragment() {
         btnSearch = view.findViewById(R.id.btnSearch)
         btnRandom = view.findViewById(R.id.btnRandom)
         btnFavorites = view.findViewById(R.id.btnFavorites)
-
         btnSearch!!.setOnClickListener {
             it.findNavController().navigate(MainFragmentDirections.actionMainFragmentToSearchPokemonFragment())
         }
         btnRandom!!.setOnClickListener {
-            it.findNavController().navigate(MainFragmentDirections.actionMainFragmentToRandomPokemonFragment())
+            val pokemonId = generateRandomPokemonId()
+            pokemonViewModel!!.id = pokemonId
         }
         btnFavorites!!.setOnClickListener {
             it.findNavController().navigate(MainFragmentDirections.actionMainFragmentToFavoritesFragment())
@@ -38,5 +57,10 @@ class MainFragment : Fragment() {
         return view
     }
 
+    private fun showPokemon(pokemon: Pokemon?) {
+        findNavController().navigate(MainFragmentDirections.actionMainFragmentToSearchPokemonFragment(pokemon))
+    }
+
+    private fun generateRandomPokemonId() = Random.nextInt(1, MAX_POKEMON_ID + 1)
 
 }

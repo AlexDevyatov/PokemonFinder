@@ -16,7 +16,13 @@
     </fragment>
     <fragment android:id="@+id/searchPokemonFragment"
               android:name="com.alexdevyatov.pokemonfinder.view.fragment.SearchPokemonFragment"
-              android:label="SearchPokemonFragment"/>
+              android:label="SearchPokemonFragment">
+        <argument
+                android:name="pokemon"
+                app:argType="com.alexdevyatov.pokemonfinder.model.Pokemon"
+                app:nullable="true"
+                android:defaultValue="@null"/>
+    </fragment>
     <fragment
             android:id="@+id/randomPokemonFragment"
             android:name="com.alexdevyatov.pokemonfinder.view.fragment.RandomPokemonFragment"

@@ -10,4 +10,8 @@ class Repository(private val service: ApiService) {
         return service.getPokemon(name)
     }
 
+    fun getPokemon(id: Int): Single<Pokemon> {
+        return service.getPokemon(id)
+    }
+
 }

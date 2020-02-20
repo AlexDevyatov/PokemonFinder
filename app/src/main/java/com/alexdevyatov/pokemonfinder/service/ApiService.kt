@@ -11,4 +11,9 @@ interface ApiService {
     fun getPokemon(
         @Path("name") name: String
     ) : Single<Pokemon>
+
+    @GET("pokemon/{id}")
+    fun getPokemon(
+        @Path("id") id: Int
+    ) : Single<Pokemon>
 }

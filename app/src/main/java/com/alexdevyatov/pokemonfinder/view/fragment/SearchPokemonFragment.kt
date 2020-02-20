@@ -13,6 +13,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.navArgs
 import com.alexdevyatov.pokemonfinder.App
 import com.alexdevyatov.pokemonfinder.R
 import com.alexdevyatov.pokemonfinder.model.Pokemon
@@ -24,9 +25,13 @@ import kotlinx.android.synthetic.main.fragment_search_pokemon.*
 
 class SearchPokemonFragment : Fragment() {
 
+    val args: SearchPokemonFragmentArgs by navArgs()
+
     private var searchView: SearchView? = null
     private var queryTextListener: SearchView.OnQueryTextListener? = null
     private var pokemonViewModel: PokemonViewModel? = null
+
+    private var pokemon: Pokemon? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,11 +43,15 @@ class SearchPokemonFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        tvWeightCaption.visibility = View.INVISIBLE
-        tvHeightCaption.visibility = View.INVISIBLE
-        tvNameCaption.visibility = View.INVISIBLE
-        tvTypes.visibility = View.INVISIBLE
-        llTypesContainer.removeAllViews()
+        if (pokemon == null) {
+            tvWeightCaption.visibility = View.INVISIBLE
+            tvHeightCaption.visibility = View.INVISIBLE
+            tvNameCaption.visibility = View.INVISIBLE
+            tvTypes.visibility = View.INVISIBLE
+            llTypesContainer.removeAllViews()
+        } else {
+            updatePokemonView(pokemon)
+        }
     }
 
 
@@ -50,6 +59,7 @@ class SearchPokemonFragment : Fragment() {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
         createViewModel()
+        pokemon = args.pokemon
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -73,7 +83,6 @@ class SearchPokemonFragment : Fragment() {
                 override fun onQueryTextSubmit(query: String): Boolean {
                     Log.i("onQueryTextSubmit", query)
                     pokemonViewModel!!.name = query
-                    pokemonViewModel!!.request()
                     pokemonViewModel!!.data.observe(this@SearchPokemonFragment, Observer<Pokemon> { updatePokemonView(it)})
                     return true
                 }
