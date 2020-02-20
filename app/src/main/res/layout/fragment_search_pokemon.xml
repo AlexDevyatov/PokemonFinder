@@ -17,26 +17,17 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:padding="5dp"
+            android:textSize="23sp"
             tools:text="pikachu" />
 
     <ImageView
             android:id="@+id/ivPokemon"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:padding="5dp"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
             app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvPokemonName" />
 
-    <TextView
-            android:id="@+id/tvNameCaption"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:text="@string/name"
-            android:textColor="@color/textColorBlack"
-            android:visibility="invisible"
-            app:layout_constraintLeft_toRightOf="@+id/ivPokemon"
-            app:layout_constraintTop_toBottomOf="@+id/tvPokemonName" />
 
     <TextView
             android:id="@+id/tvName"
@@ -44,20 +35,10 @@
             android:layout_height="wrap_content"
             android:padding="5dp"
             android:textColor="@color/textColorBlack"
-            app:layout_constraintLeft_toRightOf="@+id/tvNameCaption"
-            app:layout_constraintTop_toBottomOf="@+id/tvPokemonName"
+            app:layout_constraintEnd_toEndOf="@+id/ivPokemon"
+            app:layout_constraintStart_toStartOf="@+id/ivPokemon"
+            app:layout_constraintTop_toBottomOf="@+id/ivPokemon"
             tools:text="Pikachu" />
-
-    <TextView
-            android:id="@+id/tvWeightCaption"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:text="@string/weight"
-            android:textColor="@color/textColorBlack"
-            android:visibility="invisible"
-            app:layout_constraintLeft_toRightOf="@+id/ivPokemon"
-            app:layout_constraintTop_toBottomOf="@+id/tvNameCaption" />
 
     <TextView
             android:id="@+id/tvWeight"
@@ -65,20 +46,10 @@
             android:layout_height="wrap_content"
             android:padding="5dp"
             android:textColor="@color/textColorBlack"
-            app:layout_constraintLeft_toRightOf="@+id/tvWeightCaption"
+
+            app:layout_constraintStart_toStartOf="@+id/tvName"
             app:layout_constraintTop_toBottomOf="@+id/tvName"
             tools:text="90 lb" />
-
-    <TextView
-            android:id="@+id/tvHeightCaption"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:text="@string/height"
-            android:textColor="@color/textColorBlack"
-            android:visibility="invisible"
-            app:layout_constraintLeft_toRightOf="@+id/ivPokemon"
-            app:layout_constraintTop_toBottomOf="@+id/tvWeightCaption" />
 
     <TextView
             android:id="@+id/tvHeight"
@@ -86,28 +57,26 @@
             android:layout_height="wrap_content"
             android:padding="5dp"
             android:textColor="@color/textColorBlack"
-            app:layout_constraintLeft_toRightOf="@+id/tvHeightCaption"
+            app:layout_constraintStart_toStartOf="@+id/tvName"
             app:layout_constraintTop_toBottomOf="@+id/tvWeight"
             tools:text="175" />
-
-    <TextView
-            android:id="@+id/tvTypes"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:text="@string/types"
-            android:textColor="@color/textColorBlack"
-            android:visibility="invisible"
-            app:layout_constraintLeft_toRightOf="@+id/ivPokemon"
-            app:layout_constraintTop_toBottomOf="@+id/tvHeightCaption" />
 
     <LinearLayout
             android:id="@+id/llTypesContainer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="5dp"
             android:orientation="horizontal"
-            app:layout_constraintLeft_toRightOf="@id/tvTypes"
+            android:padding="5dp"
+            app:layout_constraintStart_toStartOf="@+id/tvName"
             app:layout_constraintTop_toBottomOf="@id/tvHeight" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floating_action_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_margin="16dp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

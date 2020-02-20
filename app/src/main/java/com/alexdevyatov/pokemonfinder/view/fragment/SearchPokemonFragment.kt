@@ -44,10 +44,6 @@ class SearchPokemonFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         if (pokemon == null) {
-            tvWeightCaption.visibility = View.INVISIBLE
-            tvHeightCaption.visibility = View.INVISIBLE
-            tvNameCaption.visibility = View.INVISIBLE
-            tvTypes.visibility = View.INVISIBLE
             llTypesContainer.removeAllViews()
         } else {
             updatePokemonView(pokemon)
@@ -94,17 +90,20 @@ class SearchPokemonFragment : Fragment() {
     }
 
     private fun updatePokemonView(pokemon: Pokemon?) {
-        tvWeightCaption.visibility = View.VISIBLE
-        tvHeightCaption.visibility = View.VISIBLE
-        tvNameCaption.visibility = View.VISIBLE
-        tvTypes.visibility = View.VISIBLE
-
         tvPokemonName.text = pokemon!!.name
-        tvName.text = pokemon.name
-        tvWeight.text = (pokemon.weight * 0.1).toString() + " kg"
-        tvHeight.text = (pokemon.height * 0.1).toString() + " m"
+        tvName.text = resources.getString(R.string.name) + " " + pokemon!!.name
+        String.format("%.1f", pokemon.weight * 0.1)
+        tvWeight.text = resources.getString(R.string.weight) + " " + String.format("%.1f", pokemon.weight * 0.1) + " kg"
+        tvHeight.text = resources.getString(R.string.height) + " " + String.format("%.1f", pokemon.height * 0.1) + " m"
 
         llTypesContainer.removeAllViews()
+        val tvCaption = TextView(activity)
+        tvCaption.text = resources.getString(R.string.types) + " "
+        tvCaption.setPadding(0,5,0,5)
+        tvCaption.layoutParams = ViewGroup.LayoutParams(WRAP_CONTENT, WRAP_CONTENT)
+        tvCaption.setTextColor(ContextCompat.getColor(activity as Context, R.color.textColorBlack))
+        llTypesContainer.addView(tvCaption)
+
         for (type in pokemon.types) {
             val tvType = TextView(activity)
             tvType.text = type.type.name
