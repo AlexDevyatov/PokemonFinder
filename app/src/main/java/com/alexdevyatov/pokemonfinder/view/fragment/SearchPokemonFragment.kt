@@ -15,20 +15,14 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.navArgs
-import com.alexdevyatov.pokemonfinder.App
-import com.alexdevyatov.pokemonfinder.R
-import com.alexdevyatov.pokemonfinder.database.AppDatabase
+import com.alexdevyatov.pokemonfinder.*
 import com.alexdevyatov.pokemonfinder.model.Pokemon
 import com.alexdevyatov.pokemonfinder.viewmodel.PokemonViewModel
 import com.alexdevyatov.pokemonfinder.viewmodel.factory.PokemonViewModelFactory
 import com.bumptech.glide.Glide
 import io.reactivex.Completable
-import io.reactivex.Observable
-import kotlinx.android.synthetic.main.fragment_search_pokemon.*
-import java.util.*
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.fragment_search_pokemon.*
 
 
 class SearchPokemonFragment : Fragment() {
@@ -59,11 +53,13 @@ class SearchPokemonFragment : Fragment() {
         ivPokeball.setOnClickListener {
             val db = (activity!!.application as App).getDatabase()
             Completable.fromAction {
-                db!!.pokemonDao().insertPokemon(pokemon!!, pokemon!!.abilities, pokemon!!.stats, pokemon!!.types)
+                val pokemonEntity = pokemon!!.createEntity()
+                db!!.pokemonDao().insertPokemon(pokemonEntity, pokemon!!.createAbilityEntities(),
+                    pokemon!!.createStatEntities(), pokemon!!.createTypeEntities())
             }
                 .subscribeOn(Schedulers.io())
                 .subscribe()
-            Toast.makeText(activity, "YOU LIKE IT", Toast.LENGTH_SHORT).show()
+            Toast.makeText(activity, R.string.like, Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -107,6 +103,8 @@ class SearchPokemonFragment : Fragment() {
     }
 
     private fun updatePokemonView(pokemon: Pokemon?) {
+        this.pokemon = pokemon
+        ivPokeball.visibility = View.VISIBLE
         tvPokemonName.text = pokemon!!.name
         tvName.text = resources.getString(R.string.name) + " " + pokemon!!.name
         String.format("%.1f", pokemon.weight * 0.1)

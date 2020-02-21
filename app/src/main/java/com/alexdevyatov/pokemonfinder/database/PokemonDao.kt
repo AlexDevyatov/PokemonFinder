@@ -4,14 +4,17 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.alexdevyatov.pokemonfinder.model.*
+import com.alexdevyatov.pokemonfinder.database.entity.PokemonAbilityEntity
+import com.alexdevyatov.pokemonfinder.database.entity.PokemonEntity
+import com.alexdevyatov.pokemonfinder.database.entity.PokemonStatEntity
+import com.alexdevyatov.pokemonfinder.database.entity.PokemonTypeEntity
 
 @Dao
 interface PokemonDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertPokemon(pokemon: Pokemon, abilities: List<PokemonAbility>,
-                      stats: List<PokemonStat>, types: List<PokemonType>)
+    fun insertPokemon(pokemon: PokemonEntity, abilities: List<PokemonAbilityEntity>,
+                      stats: List<PokemonStatEntity>, types: List<PokemonTypeEntity>)
 
     @Query("SELECT * FROM pokemons")
-    fun loadAllPokemons(): Array<PokemonWithTypes>
+    fun loadAllPokemons(): List<PokemonWithTypes>
 }

@@ -2,31 +2,31 @@ package com.alexdevyatov.pokemonfinder.database
 
 import androidx.room.Embedded
 import androidx.room.Relation
-import com.alexdevyatov.pokemonfinder.model.Pokemon
-import com.alexdevyatov.pokemonfinder.model.PokemonAbility
-import com.alexdevyatov.pokemonfinder.model.PokemonStat
-import com.alexdevyatov.pokemonfinder.model.PokemonType
+import com.alexdevyatov.pokemonfinder.database.entity.PokemonAbilityEntity
+import com.alexdevyatov.pokemonfinder.database.entity.PokemonEntity
+import com.alexdevyatov.pokemonfinder.database.entity.PokemonStatEntity
+import com.alexdevyatov.pokemonfinder.database.entity.PokemonTypeEntity
 
 data class PokemonWithTypes(
 
     @Embedded
-    val pokemon: Pokemon,
+    val pokemon: PokemonEntity,
     @Relation(
         parentColumn = "id",
         entityColumn = "pokemonId"
     )
-    val types: List<PokemonType>,
+    val types: List<PokemonTypeEntity>,
 
     @Relation(
         parentColumn = "id",
         entityColumn = "pokemonId"
     )
-    val stats: List<PokemonStat>,
+    val stats: List<PokemonStatEntity>,
 
     @Relation(
         parentColumn = "id",
         entityColumn = "pokemonId"
     )
-    val abilities: List<PokemonAbility>
+    val abilities: List<PokemonAbilityEntity>
 
 )

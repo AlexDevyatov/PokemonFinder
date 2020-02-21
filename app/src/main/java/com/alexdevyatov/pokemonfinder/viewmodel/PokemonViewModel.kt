@@ -25,15 +25,6 @@ class PokemonViewModel(appComponent: AppComponent) : BaseViewModel<Pokemon>() {
                 .subscribeBy (
                     onSuccess = {
                         Log.d("REQUEST", "Success")
-                        for (ability in it.abilities) {
-                            ability.pokemonId = it.id
-                        }
-                        for (types in it.types) {
-                            types.pokemonId = it.id
-                        }
-                        for (stats in it.types) {
-                            stats.pokemonId = it.id
-                        }
                         data.postValue(it)
                     },
                     onError = { Log.d("REQUEST", "Error")}
@@ -50,15 +41,6 @@ class PokemonViewModel(appComponent: AppComponent) : BaseViewModel<Pokemon>() {
                 .subscribeBy (
                     onSuccess = {
                         Log.d("REQUEST", "Success")
-                        for (ability in it.abilities) {
-                            ability.pokemonId = it.id
-                        }
-                        for (types in it.types) {
-                            types.pokemonId = it.id
-                        }
-                        for (stats in it.types) {
-                            stats.pokemonId = it.id
-                        }
                         data.postValue(it)
                     },
                     onError = { Log.d("REQUEST", "Error")}

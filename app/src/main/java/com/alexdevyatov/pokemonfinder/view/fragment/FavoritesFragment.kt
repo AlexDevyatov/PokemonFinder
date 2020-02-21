@@ -9,13 +9,16 @@ import android.view.ViewGroup
 import com.alexdevyatov.pokemonfinder.App
 
 import com.alexdevyatov.pokemonfinder.R
+import com.alexdevyatov.pokemonfinder.createPokemonList
 import com.alexdevyatov.pokemonfinder.database.AppDatabase
+import com.alexdevyatov.pokemonfinder.model.Pokemon
 import io.reactivex.Observable
-import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
 class FavoritesFragment : Fragment() {
+
+    private var pokemons: List<Pokemon> = listOf()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,7 +32,7 @@ class FavoritesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         Observable.fromCallable {
             val db = (activity!!.application as App).getDatabase()
-            val pokemons = (db as AppDatabase).pokemonDao().loadAllPokemons()
+            pokemons = (db as AppDatabase).pokemonDao().loadAllPokemons().createPokemonList()
             val a = 1
         }.subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
