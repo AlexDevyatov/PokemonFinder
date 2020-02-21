@@ -1,18 +1,43 @@
 package com.alexdevyatov.pokemonfinder.model
 
 import android.os.Parcelable
+import androidx.room.*
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 import kotlinx.android.parcel.RawValue
+import java.lang.reflect.Constructor
 
 @Parcelize
+@Entity(tableName = "pokemons")
 data class Pokemon(
-    @SerializedName("id") val id: Int,
-    @SerializedName("name") val name: String,
-    @SerializedName("weight") val weight: Int,
-    @SerializedName("height") val height: Int,
-    @SerializedName("abilities") val abilities: @RawValue List<PokemonAbility>,
-    @SerializedName("sprites") val sprites: @RawValue PokemonSprites,
-    @SerializedName("stats") val stats: @RawValue List<PokemonStat>,
-    @SerializedName("types") val types: @RawValue List<PokemonType>
+
+    @PrimaryKey
+    @SerializedName("id")
+    var id: Int = 0,
+
+    @SerializedName("name")
+    var name: String = "",
+
+    @SerializedName("weight")
+    var weight: Int = 0,
+
+    @SerializedName("height")
+    var height: Int = 0,
+
+    @Ignore
+    @SerializedName("abilities")
+    var abilities: @RawValue List<PokemonAbility> = emptyList(),
+
+    @Ignore
+    @SerializedName("sprites")
+    //@Embedded
+    var sprites: @RawValue PokemonSprites = PokemonSprites("", ""),
+
+    @Ignore
+    @SerializedName("stats")
+    var stats: @RawValue List<PokemonStat> = emptyList(),
+
+    @Ignore
+    @SerializedName("types")
+    var types: @RawValue List<PokemonType> = emptyList()
 ) : Parcelable

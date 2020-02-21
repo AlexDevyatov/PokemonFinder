@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.*
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -16,11 +17,18 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.navArgs
 import com.alexdevyatov.pokemonfinder.App
 import com.alexdevyatov.pokemonfinder.R
+import com.alexdevyatov.pokemonfinder.database.AppDatabase
 import com.alexdevyatov.pokemonfinder.model.Pokemon
 import com.alexdevyatov.pokemonfinder.viewmodel.PokemonViewModel
 import com.alexdevyatov.pokemonfinder.viewmodel.factory.PokemonViewModelFactory
 import com.bumptech.glide.Glide
+import io.reactivex.Completable
+import io.reactivex.Observable
 import kotlinx.android.synthetic.main.fragment_search_pokemon.*
+import java.util.*
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.rxkotlin.subscribeBy
+import io.reactivex.schedulers.Schedulers
 
 
 class SearchPokemonFragment : Fragment() {
@@ -48,6 +56,15 @@ class SearchPokemonFragment : Fragment() {
         } else {
             updatePokemonView(pokemon)
         }
+        ivPokeball.setOnClickListener {
+            val db = (activity!!.application as App).getDatabase()
+            Completable.fromAction {
+                db!!.pokemonDao().insertPokemon(pokemon!!, pokemon!!.abilities, pokemon!!.stats, pokemon!!.types)
+            }
+                .subscribeOn(Schedulers.io())
+                .subscribe()
+            Toast.makeText(activity, "YOU LIKE IT", Toast.LENGTH_SHORT).show()
+        }
     }
 
 
@@ -59,7 +76,7 @@ class SearchPokemonFragment : Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu, menu);
+        inflater.inflate(R.menu.menu, menu)
         val searchItem = menu.findItem(R.id.action_search)
         val searchManager = activity!!.getSystemService(Context.SEARCH_SERVICE) as SearchManager
 
