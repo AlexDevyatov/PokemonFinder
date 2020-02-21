@@ -59,7 +59,13 @@ class SearchPokemonFragment : Fragment() {
             }
                 .subscribeOn(Schedulers.io())
                 .subscribe()
-            Toast.makeText(activity, R.string.like, Toast.LENGTH_SHORT).show()
+            val newState = !ivPokeball.isSelected
+            ivPokeball.isSelected = newState
+            if (newState) {
+                Toast.makeText(activity, R.string.like, Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(activity, R.string.dismiss, Toast.LENGTH_SHORT).show()
+            }
         }
     }
 

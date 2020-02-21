@@ -76,7 +76,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|right"
             android:layout_margin="16dp"
-            android:src="@drawable/pokeball"
+            android:src="@drawable/selector_my_pokemon"
             android:visibility="gone"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" />

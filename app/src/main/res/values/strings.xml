@@ -2,10 +2,11 @@
     <string name="app_name">PokemonFinder</string>
     <string name="search_pokemon">Найти покемона</string>
     <string name="random_pokemon">Случайный покемон</string>
-    <string name="favorite_pokemones">Избранные покемоны</string>
+    <string name="favorite_pokemones">Мои покемоны</string>
     <string name="name">Name:</string>
     <string name="weight">Weight:</string>
     <string name="height">Height:</string>
     <string name="types">Types:</string>
     <string name="like">You catch the pokemon!</string>
+    <string name="dismiss">You dismiss the pokemon!</string>
 </resources>
