@@ -4,9 +4,11 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.alexdevyatov.pokemonfinder.R
 import com.alexdevyatov.pokemonfinder.model.Pokemon
+import com.alexdevyatov.pokemonfinder.view.fragment.FavoritesFragmentDirections
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.item_pokemon.view.*
 
@@ -23,6 +25,10 @@ class PokemonAdapter(val pokemons : List<Pokemon>,
         val pokemon = pokemons[position]
         holder.tvPokemonName.text = pokemon.name
         Glide.with(context).load(pokemon.sprites.front).centerCrop().into(holder.ivPokemon)
+
+        holder.itemView.setOnClickListener {
+            it.findNavController().navigate(FavoritesFragmentDirections.actionFavoritesFragmentToSearchPokemonFragment(pokemon))
+        }
     }
 
     class ViewHolder (view: View) : RecyclerView.ViewHolder(view) {

@@ -71,10 +71,7 @@ class SearchPokemonFragment : Fragment() {
             } else {
                 Completable.fromAction {
                     val pokemonEntity = pokemon!!.createEntity()
-                    db!!.pokemonDao().deletePokemon(
-                        pokemonEntity, pokemon!!.createAbilityEntities(),
-                        pokemon!!.createStatEntities(), pokemon!!.createTypeEntities()
-                    )
+                    db!!.pokemonDao().deletePokemon(pokemonEntity)
                 }
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -115,7 +112,9 @@ class SearchPokemonFragment : Fragment() {
                 override fun onQueryTextSubmit(query: String): Boolean {
                     Log.i("onQueryTextSubmit", query)
                     pokemonViewModel!!.name = query
-                    pokemonViewModel!!.data.observe(this@SearchPokemonFragment, Observer<Pokemon> { updatePokemonView(it)})
+                    pokemonViewModel!!.data.observe(
+                        this@SearchPokemonFragment,
+                        Observer<Pokemon> { updatePokemonView(it) })
                     return true
                 }
             }
@@ -127,17 +126,36 @@ class SearchPokemonFragment : Fragment() {
 
     private fun updatePokemonView(pokemon: Pokemon?) {
         this.pokemon = pokemon
+        var count = 0
+        Completable.fromAction {
+            val db = (activity!!.application as App).getDatabase()
+            count = db!!.pokemonDao().pokemonsCount(pokemon!!.id)
+        }.subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
+                if (count > 0) {
+                    ivPokeball.isSelected = true
+                }
+            }
+
+
         ivPokeball.visibility = View.VISIBLE
         tvPokemonName.text = pokemon!!.name
         tvName.text = resources.getString(R.string.name) + " " + pokemon!!.name
         String.format("%.1f", pokemon.weight * 0.1)
-        tvWeight.text = resources.getString(R.string.weight) + " " + String.format("%.1f", pokemon.weight * 0.1) + " kg"
-        tvHeight.text = resources.getString(R.string.height) + " " + String.format("%.1f", pokemon.height * 0.1) + " m"
+        tvWeight.text = resources.getString(R.string.weight) + " " + String.format(
+            "%.1f",
+            pokemon.weight * 0.1
+        ) + " kg"
+        tvHeight.text = resources.getString(R.string.height) + " " + String.format(
+            "%.1f",
+            pokemon.height * 0.1
+        ) + " m"
 
         llTypesContainer.removeAllViews()
         val tvCaption = TextView(activity)
         tvCaption.text = resources.getString(R.string.types) + " "
-        tvCaption.setPadding(0,5,0,5)
+        tvCaption.setPadding(0, 5, 0, 5)
         tvCaption.layoutParams = ViewGroup.LayoutParams(WRAP_CONTENT, WRAP_CONTENT)
         tvCaption.setTextColor(ContextCompat.getColor(activity as Context, R.color.textColorBlack))
         llTypesContainer.addView(tvCaption)
@@ -145,7 +163,7 @@ class SearchPokemonFragment : Fragment() {
         for (type in pokemon.types) {
             val tvType = TextView(activity)
             tvType.text = type.type.name
-            tvType.setPadding(5,5,5,5)
+            tvType.setPadding(5, 5, 5, 5)
             tvType.layoutParams = ViewGroup.LayoutParams(WRAP_CONTENT, WRAP_CONTENT)
             tvType.setTextColor(ContextCompat.getColor(activity as Context, R.color.textColorBlack))
             llTypesContainer.addView(tvType)
@@ -165,6 +183,7 @@ class SearchPokemonFragment : Fragment() {
     private fun createViewModel() {
         val appComponent = (activity!!.application as App).getAppComponent()
 
-        pokemonViewModel = ViewModelProviders.of(this, PokemonViewModelFactory(appComponent!!)).get(PokemonViewModel::class.java)
+        pokemonViewModel = ViewModelProviders.of(this, PokemonViewModelFactory(appComponent!!))
+            .get(PokemonViewModel::class.java)
     }
 }
