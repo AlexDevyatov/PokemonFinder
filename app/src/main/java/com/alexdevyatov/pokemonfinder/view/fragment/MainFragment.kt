@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import com.alexdevyatov.pokemonfinder.App
 import com.alexdevyatov.pokemonfinder.R
 import com.alexdevyatov.pokemonfinder.model.Pokemon
+import com.alexdevyatov.pokemonfinder.view.activity.MainActivity
 import com.alexdevyatov.pokemonfinder.viewmodel.PokemonViewModel
 import com.alexdevyatov.pokemonfinder.viewmodel.factory.PokemonViewModelFactory
 import kotlinx.android.synthetic.main.fragment_main.*
@@ -49,6 +50,7 @@ class MainFragment : Fragment() {
             it.findNavController().navigate(MainFragmentDirections.actionMainFragmentToSearchPokemonFragment())
         }
         btnRandom!!.setOnClickListener {
+            mainLayout.visibility = View.GONE
             progressBar.visibility = View.VISIBLE
             val pokemonId = generateRandomPokemonId()
             pokemonViewModel!!.id = pokemonId
@@ -60,7 +62,7 @@ class MainFragment : Fragment() {
     }
 
     private fun showPokemon(pokemon: Pokemon?) {
-        progressBar.visibility = View.VISIBLE
+        progressBar.visibility = View.GONE
         findNavController().navigate(MainFragmentDirections.actionMainFragmentToSearchPokemonFragment(pokemon))
     }
 

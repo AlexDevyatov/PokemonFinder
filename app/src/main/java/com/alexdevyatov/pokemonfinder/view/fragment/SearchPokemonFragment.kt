@@ -114,6 +114,7 @@ class SearchPokemonFragment : Fragment() {
 
                 override fun onQueryTextSubmit(query: String): Boolean {
                     Log.i("onQueryTextSubmit", query)
+                    mainLayout.visibility = View.GONE
                     progressBar.visibility = View.VISIBLE
                     pokemonViewModel!!.name = query
                     return true
@@ -126,6 +127,7 @@ class SearchPokemonFragment : Fragment() {
     }
 
     private fun updatePokemonView(pokemon: Pokemon?) {
+        mainLayout.visibility = View.VISIBLE
         progressBar.visibility = View.GONE
         this.pokemon = pokemon
         var count = 0
