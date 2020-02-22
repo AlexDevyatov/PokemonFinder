@@ -1,20 +1,24 @@
 package com.alexdevyatov.pokemonfinder.view.fragment
 
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.alexdevyatov.pokemonfinder.App
 
 import com.alexdevyatov.pokemonfinder.R
+import com.alexdevyatov.pokemonfinder.adapter.PokemonAdapter
 import com.alexdevyatov.pokemonfinder.createPokemonList
 import com.alexdevyatov.pokemonfinder.database.AppDatabase
 import com.alexdevyatov.pokemonfinder.model.Pokemon
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.fragment_favorites.*
 
 class FavoritesFragment : Fragment() {
 
@@ -33,10 +37,13 @@ class FavoritesFragment : Fragment() {
         Observable.fromCallable {
             val db = (activity!!.application as App).getDatabase()
             pokemons = (db as AppDatabase).pokemonDao().loadAllPokemons().createPokemonList()
-            val a = 1
+
         }.subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe()
+            .subscribe {
+                recyclerView.layoutManager = LinearLayoutManager(activity)
+                recyclerView.adapter = PokemonAdapter(pokemons, activity!!)
+            }
     }
 
 
