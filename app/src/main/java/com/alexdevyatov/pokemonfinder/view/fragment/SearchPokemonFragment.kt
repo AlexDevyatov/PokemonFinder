@@ -21,6 +21,7 @@ import com.alexdevyatov.pokemonfinder.viewmodel.PokemonViewModel
 import com.alexdevyatov.pokemonfinder.viewmodel.factory.PokemonViewModelFactory
 import com.bumptech.glide.Glide
 import io.reactivex.Completable
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_search_pokemon.*
 
@@ -50,21 +51,37 @@ class SearchPokemonFragment : Fragment() {
         } else {
             updatePokemonView(pokemon)
         }
+        val db = (activity!!.application as App).getDatabase()
         ivPokeball.setOnClickListener {
-            val db = (activity!!.application as App).getDatabase()
-            Completable.fromAction {
-                val pokemonEntity = pokemon!!.createEntity()
-                db!!.pokemonDao().insertPokemon(pokemonEntity, pokemon!!.createAbilityEntities(),
-                    pokemon!!.createStatEntities(), pokemon!!.createTypeEntities())
-            }
-                .subscribeOn(Schedulers.io())
-                .subscribe()
-            val newState = !ivPokeball.isSelected
-            ivPokeball.isSelected = newState
-            if (newState) {
-                Toast.makeText(activity, R.string.like, Toast.LENGTH_SHORT).show()
+            val selected = ivPokeball.isSelected
+            if (!selected) {
+                Completable.fromAction {
+                    val pokemonEntity = pokemon!!.createEntity()
+                    db!!.pokemonDao().insertPokemon(
+                        pokemonEntity, pokemon!!.createAbilityEntities(),
+                        pokemon!!.createStatEntities(), pokemon!!.createTypeEntities()
+                    )
+                }
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe {
+                        ivPokeball.isSelected = true
+                        Toast.makeText(activity, R.string.like, Toast.LENGTH_SHORT).show()
+                    }
             } else {
-                Toast.makeText(activity, R.string.dismiss, Toast.LENGTH_SHORT).show()
+                Completable.fromAction {
+                    val pokemonEntity = pokemon!!.createEntity()
+                    db!!.pokemonDao().deletePokemon(
+                        pokemonEntity, pokemon!!.createAbilityEntities(),
+                        pokemon!!.createStatEntities(), pokemon!!.createTypeEntities()
+                    )
+                }
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe {
+                        ivPokeball.isSelected = false
+                        Toast.makeText(activity, R.string.dismiss, Toast.LENGTH_SHORT).show()
+                    }
             }
         }
     }
@@ -134,7 +151,7 @@ class SearchPokemonFragment : Fragment() {
             llTypesContainer.addView(tvType)
         }
 
-        Glide.with(this).load(pokemon!!.sprites.front).centerCrop().into(ivPokemon)
+        Glide.with(this).load(pokemon.sprites.front).centerCrop().into(ivPokemon)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
