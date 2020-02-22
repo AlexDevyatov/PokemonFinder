@@ -46,6 +46,9 @@ class SearchPokemonFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
+        pokemonViewModel!!.data.observe(
+            this@SearchPokemonFragment,
+            Observer<Pokemon> { updatePokemonView(it) })
         if (pokemon == null) {
             llTypesContainer.removeAllViews()
         } else {
@@ -111,10 +114,8 @@ class SearchPokemonFragment : Fragment() {
 
                 override fun onQueryTextSubmit(query: String): Boolean {
                     Log.i("onQueryTextSubmit", query)
+                    progressBar.visibility = View.VISIBLE
                     pokemonViewModel!!.name = query
-                    pokemonViewModel!!.data.observe(
-                        this@SearchPokemonFragment,
-                        Observer<Pokemon> { updatePokemonView(it) })
                     return true
                 }
             }
@@ -125,6 +126,7 @@ class SearchPokemonFragment : Fragment() {
     }
 
     private fun updatePokemonView(pokemon: Pokemon?) {
+        progressBar.visibility = View.GONE
         this.pokemon = pokemon
         var count = 0
         Completable.fromAction {
