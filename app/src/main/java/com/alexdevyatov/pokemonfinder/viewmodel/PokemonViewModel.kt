@@ -27,7 +27,10 @@ class PokemonViewModel(appComponent: AppComponent) : BaseViewModel<Pokemon>() {
                         Log.d("REQUEST", "Success")
                         data.postValue(it)
                     },
-                    onError = { Log.d("REQUEST", "Error")}
+                    onError = {
+                        Log.d("REQUEST", "Error")
+                        data.postValue(null)
+                    }
                 )
         }
 
@@ -43,7 +46,10 @@ class PokemonViewModel(appComponent: AppComponent) : BaseViewModel<Pokemon>() {
                         Log.d("REQUEST", "Success")
                         data.postValue(it)
                     },
-                    onError = { Log.d("REQUEST", "Error")}
+                    onError = {
+                        Log.d("REQUEST", "Error")
+                        data.postValue(null)
+                    }
                 )
         }
 
@@ -62,7 +68,10 @@ class PokemonViewModel(appComponent: AppComponent) : BaseViewModel<Pokemon>() {
                     Log.d("REQUEST", "Success")
                     data.postValue(it)
                 },
-                onError = { Log.d("REQUEST", "Error")}
+                onError = {
+                    Log.d("REQUEST", "Error")
+                    data.postValue(null)
+                }
             )
     }
 }

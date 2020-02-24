@@ -2,7 +2,7 @@
     <string name="app_name">PokemonFinder</string>
     <string name="search_pokemon">Find pokemon</string>
     <string name="random_pokemon">Random pokemon</string>
-    <string name="favorite_pokemones">My pokemons</string>
+    <string name="favorite_pokemons">My pokemons</string>
     <string name="name">Name:</string>
     <string name="weight">Weight:</string>
     <string name="height">Height:</string>
@@ -10,4 +10,5 @@
     <string name="like">You catch the pokemon!</string>
     <string name="dismiss">You dismiss the pokemon!</string>
     <string name="no_pokemons">You haven\'t pokemons</string>
+    <string name="pokemon_not_found">Oops… Pokemon is not found</string>
 </resources>

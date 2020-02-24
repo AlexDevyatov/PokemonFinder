@@ -8,6 +8,19 @@
         android:padding="@dimen/standard_padding"
         tools:context=".view.fragment.SearchPokemonFragment">
 
+    <TextView
+            android:id="@+id/tvPokemonNotFound"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/textColorBlack"
+            android:text="@string/pokemon_not_found"
+            android:gravity="center"
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
     <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/mainLayout"
             android:layout_width="match_parent"

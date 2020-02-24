@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
@@ -24,6 +25,9 @@ import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_search_pokemon.*
+import androidx.core.content.ContextCompat.getSystemService
+
+
 
 
 class SearchPokemonFragment : Fragment() {
@@ -117,6 +121,7 @@ class SearchPokemonFragment : Fragment() {
                     mainLayout.visibility = View.GONE
                     progressBar.visibility = View.VISIBLE
                     pokemonViewModel!!.name = query
+                    hideSoftKeyboard()
                     return true
                 }
             }
@@ -127,8 +132,16 @@ class SearchPokemonFragment : Fragment() {
     }
 
     private fun updatePokemonView(pokemon: Pokemon?) {
+        if (pokemon == null) {
+            mainLayout.visibility = View.GONE
+            progressBar.visibility = View.GONE
+            tvPokemonNotFound.visibility = View.VISIBLE
+            return
+        }
         mainLayout.visibility = View.VISIBLE
         progressBar.visibility = View.GONE
+        tvPokemonNotFound.visibility = View.GONE
+
         this.pokemon = pokemon
         var count = 0
         Completable.fromAction {
@@ -189,5 +202,13 @@ class SearchPokemonFragment : Fragment() {
 
         pokemonViewModel = ViewModelProviders.of(this, PokemonViewModelFactory(appComponent!!))
             .get(PokemonViewModel::class.java)
+    }
+
+    private fun hideSoftKeyboard() {
+        val view = activity!!.currentFocus
+        if (view != null) {
+            val imm = activity!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
+            imm!!.hideSoftInputFromWindow(view.windowToken, 0)
+        }
     }
 }
