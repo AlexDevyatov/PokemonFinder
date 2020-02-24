@@ -36,12 +36,16 @@ class FavoritesFragment : Fragment() {
         Observable.fromCallable {
             val db = (activity!!.application as App).getDatabase()
             pokemons = (db as AppDatabase).pokemonDao().loadAllPokemons().createPokemonList()
-
         }.subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
-                recyclerView.layoutManager = LinearLayoutManager(activity)
-                recyclerView.adapter = PokemonAdapter(pokemons, activity!!)
+                if (pokemons.isNotEmpty()) {
+                    recyclerView.layoutManager = LinearLayoutManager(activity)
+                    recyclerView.adapter = PokemonAdapter(pokemons, activity!!)
+                    tvEmptyPokemons.visibility = View.GONE
+                } else {
+                    tvEmptyPokemons.visibility = View.VISIBLE
+                }
             }
     }
 
