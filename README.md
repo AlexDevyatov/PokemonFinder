@@ -5,7 +5,7 @@
 
 Приложение является Single Activity Application.
 
-Список:
+Технологический стек:
 - Kotlin
 - MVVM
 - Navigation Architecture Component
