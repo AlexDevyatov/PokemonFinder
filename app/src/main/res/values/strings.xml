@@ -11,4 +11,5 @@
     <string name="dismiss">You dismiss the pokemon!</string>
     <string name="no_pokemons">You haven\'t pokemons</string>
     <string name="pokemon_not_found">Oops… Pokemon is not found</string>
+    <string name="hint">Type the pokemon\'s name</string>
 </resources>

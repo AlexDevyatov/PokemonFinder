@@ -120,13 +120,13 @@ class SearchPokemonFragment : Fragment() {
                     Log.i("onQueryTextSubmit", query)
                     mainLayout.visibility = View.GONE
                     progressBar.visibility = View.VISIBLE
-                    pokemonViewModel!!.name = query
+                    pokemonViewModel!!.name = query.decapitalize()
                     hideSoftKeyboard()
                     return true
                 }
             }
             searchView!!.setOnQueryTextListener(queryTextListener)
-            searchView!!.queryHint = "Найти покемона по имени"
+            searchView!!.queryHint = getString(R.string.hint)
         }
         super.onCreateOptionsMenu(menu, inflater)
     }
@@ -142,6 +142,7 @@ class SearchPokemonFragment : Fragment() {
         progressBar.visibility = View.GONE
         tvPokemonNotFound.visibility = View.GONE
 
+        pokemon.name = pokemon.name.capitalize()
         this.pokemon = pokemon
         var count = 0
         Completable.fromAction {
@@ -157,8 +158,8 @@ class SearchPokemonFragment : Fragment() {
 
 
         ivPokeball.visibility = View.VISIBLE
-        tvPokemonName.text = pokemon!!.name
-        tvName.text = resources.getString(R.string.name) + " " + pokemon!!.name
+        tvPokemonName.text = pokemon.name
+        tvName.text = resources.getString(R.string.name) + " " + pokemon.name
         String.format("%.1f", pokemon.weight * 0.1)
         tvWeight.text = resources.getString(R.string.weight) + " " + String.format(
             "%.1f",
