@@ -4,13 +4,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="5dp"
+        android:padding="@dimen/standard_padding"
         tools:context=".view.fragment.FavoritesFragment">
 
     <ImageView
             android:id="@+id/ivPokemon"
-            android:layout_width="60dp"
-            android:layout_height="60dp"/>
+            android:layout_width="@dimen/image_width_small"
+            android:layout_height="@dimen/image_height_small"/>
 
     <TextView
             android:id="@+id/tvPokemonName"

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="standard_padding">5dp</dimen>
+    <dimen name="image_width">200dp</dimen>
+    <dimen name="image_height">200dp</dimen>
+    <dimen name="image_width_small">60dp</dimen>
+    <dimen name="image_height_small">60dp</dimen>
+    <dimen name="text_heading_size">23sp</dimen>
+    <dimen name="floating_button_margin">16dp</dimen>
+</resources>
