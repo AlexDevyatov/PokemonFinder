@@ -42,6 +42,7 @@ class MainFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        activity!!.setTitle(R.string.app_name)
         val view = inflater.inflate(R.layout.fragment_main, container, false)
         btnSearch = view.findViewById(R.id.btnSearch)
         btnRandom = view.findViewById(R.id.btnRandom)
