@@ -1,10 +1,11 @@
 package com.alexdevyatov.pokemonfinder.viewmodel
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import java.util.concurrent.Executors
 
-abstract class BaseViewModel<T> : ViewModel() {
+abstract class BaseViewModel<T>(application: Application) : AndroidViewModel(application) {
 
     var data: MutableLiveData<T> = MutableLiveData()
 

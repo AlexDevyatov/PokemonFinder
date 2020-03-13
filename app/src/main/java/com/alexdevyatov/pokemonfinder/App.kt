@@ -9,6 +9,10 @@ import com.alexdevyatov.pokemonfinder.di.NetModule
 
 class App : Application() {
 
+    companion object {
+        const val POKEMON_IMG_URL = "https://pokeres.bastionbot.org/images/pokemon/"
+    }
+
     private var appComponent: AppComponent? = null
     private var database: AppDatabase? = null
 

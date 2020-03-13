@@ -14,7 +14,6 @@ import androidx.navigation.fragment.findNavController
 import com.alexdevyatov.pokemonfinder.App
 import com.alexdevyatov.pokemonfinder.R
 import com.alexdevyatov.pokemonfinder.model.Pokemon
-import com.alexdevyatov.pokemonfinder.view.activity.MainActivity
 import com.alexdevyatov.pokemonfinder.viewmodel.PokemonViewModel
 import com.alexdevyatov.pokemonfinder.viewmodel.factory.PokemonViewModelFactory
 import kotlinx.android.synthetic.main.fragment_main.*
@@ -33,7 +32,7 @@ class MainFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val appComponent = (activity!!.application as App).getAppComponent()
-        pokemonViewModel = ViewModelProviders.of(this, PokemonViewModelFactory(appComponent!!)).get(PokemonViewModel::class.java)
+        pokemonViewModel = ViewModelProviders.of(this, PokemonViewModelFactory(appComponent!!, activity!!.application)).get(PokemonViewModel::class.java)
         pokemonViewModel!!.data.observe(this, Observer<Pokemon> { showPokemon(it)})
     }
 

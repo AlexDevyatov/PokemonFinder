@@ -21,13 +21,14 @@ import com.alexdevyatov.pokemonfinder.model.Pokemon
 import com.alexdevyatov.pokemonfinder.viewmodel.PokemonViewModel
 import com.alexdevyatov.pokemonfinder.viewmodel.factory.PokemonViewModelFactory
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.signature.ObjectKey
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_search_pokemon.*
-import androidx.core.content.ContextCompat.getSystemService
-
-
+import java.util.*
 
 
 class SearchPokemonFragment : Fragment() {
@@ -187,7 +188,15 @@ class SearchPokemonFragment : Fragment() {
             llTypesContainer.addView(tvType)
         }
 
-        Glide.with(this).load(pokemon.sprites.front).centerCrop().into(ivPokemon)
+        val requestOptions = RequestOptions()
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
+            .signature(ObjectKey(UUID.randomUUID().toString()))
+            .override(200, 200)
+        Glide.with(this)
+            .load(App.POKEMON_IMG_URL + "${pokemon.id}.png")
+            .apply(requestOptions)
+            .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+            .into(ivPokemon)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -201,14 +210,18 @@ class SearchPokemonFragment : Fragment() {
     private fun createViewModel() {
         val appComponent = (activity!!.application as App).getAppComponent()
 
-        pokemonViewModel = ViewModelProviders.of(this, PokemonViewModelFactory(appComponent!!))
+        pokemonViewModel = ViewModelProviders.of(
+            this,
+            PokemonViewModelFactory(appComponent!!, activity!!.application)
+        )
             .get(PokemonViewModel::class.java)
     }
 
     private fun hideSoftKeyboard() {
         val view = activity!!.currentFocus
         if (view != null) {
-            val imm = activity!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
+            val imm =
+                activity!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
             imm!!.hideSoftInputFromWindow(view.windowToken, 0)
         }
     }
